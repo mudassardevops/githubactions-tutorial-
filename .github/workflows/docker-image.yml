@@ -1,0 +1,28 @@
+name: My Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag devopsmolviimages:$(date +%s)
+
+    - name: Release/OS of the GitHub Actions Runner
+      run: |
+       uname -a
+       cat /etc/issue
+       touch abc.txt
+
+    - name: Docker images
+      run: | 
+       docker images
+       docker ps -a
